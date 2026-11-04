@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'">
+  <title>Overlay</title>
+  <link rel="stylesheet" href="overlay.css">
+</head>
+<body>
+  <div class="panel">
+    <div class="game" id="game">No game running</div>
+    <div class="timer" id="timer">00:00:00</div>
+    <div class="label">This session</div>
+    <div class="total" id="total"></div>
+    <div class="notes">
+      <label for="notes">Notes for this game</label>
+      <textarea id="notes" placeholder="Jot something down" spellcheck="false" disabled></textarea>
+    </div>
+    <button id="browserBtn" class="browser-btn">Open web browser</button>
+    <div class="foot">
+      <span id="clock"></span>
+      <span id="hint"></span>
+    </div>
+  </div>
+  <script src="theme-core.js"></script>
+  <script src="overlay.js"></script>
+</body>
+</html>

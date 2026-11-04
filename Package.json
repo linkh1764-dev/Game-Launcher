@@ -1,0 +1,63 @@
+{
+  "name": "game-launcher",
+  "version": "0.1.0",
+  "description": "A simple game library and launcher",
+  "main": "main.js",
+  "author": "You",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --config.npmRebuild=false",
+    "build:win": "electron-builder --win --config.npmRebuild=false",
+    "build:linux": "electron-builder --linux --config.npmRebuild=false"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.example.gamelauncher",
+    "productName": "Game Launcher",
+    "files": [
+      "main.js",
+      "preload.js",
+      "overlay-preload.js",
+      "index.html",
+      "renderer.js",
+      "styles.css",
+      "overlay.html",
+      "overlay.js",
+      "overlay.css",
+      "browser-preload.js",
+      "browser.html",
+      "browser.js",
+      "browser.css",
+      "theme-core.js",
+      "detect.js",
+      "build/icon.png"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Game"
+    },
+    "asarUnpack": [
+      "node_modules/active-win/**"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "npmRebuild": false
+  },
+  "dependencies": {
+    "active-win": "^8.2.1"
+  }
+}

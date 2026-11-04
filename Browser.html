@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'">
+  <title>Web browser</title>
+  <link rel="stylesheet" href="browser.css">
+</head>
+<body>
+  <div class="bar">
+    <div class="grip" title="Drag to move" aria-hidden="true">⋮⋮</div>
+    <button id="back" aria-label="Back" title="Back" disabled>←</button>
+    <button id="forward" aria-label="Forward" title="Forward" disabled>→</button>
+    <button id="reload" aria-label="Reload" title="Reload">↻</button>
+    <button id="home" aria-label="Go to Google" title="Go to Google">⌂</button>
+    <input id="address" type="text" spellcheck="false" autocomplete="off"
+           placeholder="Search Google or enter a web address" aria-label="Address">
+    <button id="close" aria-label="Close browser" title="Close browser">✕</button>
+  </div>
+  <script src="theme-core.js"></script>
+  <script src="browser.js"></script>
+</body>
+</html>

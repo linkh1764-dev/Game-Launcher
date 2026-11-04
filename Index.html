@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game Launcher</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Library</h1>
+    <input id="search" type="search" placeholder="Search your games" aria-label="Search your games">
+    <div class="view-toggle" role="group" aria-label="Library layout">
+      <button id="viewGrid" aria-pressed="true">Grid</button>
+      <button id="viewList" aria-pressed="false">List</button>
+    </div>
+    <button id="settingsBtn">Settings</button>
+    <button id="scanBtn">Find games</button>
+    <button id="addBtn" class="primary">Add game</button>
+  </header>
+
+  <main>
+    <div id="grid" class="grid" aria-live="polite"></div>
+    <div id="listView" class="list-view" hidden>
+      <ul id="gameList" class="game-list" aria-label="Your games"></ul>
+      <section id="detail" class="detail" hidden>
+        <div id="banner" class="banner" role="img" aria-label="Game banner"></div>
+        <div class="detail-body">
+          <div class="detail-head">
+            <h2 id="detailName"></h2>
+            <button id="detailCover">Change cover</button>
+            <button id="detailRemove">Remove</button>
+            <button id="detailPlay" class="primary">Play</button>
+          </div>
+          <dl class="stats">
+            <div><dt>Play time</dt><dd id="statPlaytime"></dd></div>
+            <div><dt>Last played</dt><dd id="statLast"></dd></div>
+          </dl>
+          <label for="detailNotes">Notes for this game</label>
+          <textarea id="detailNotes" placeholder="Jot down tips, goals, or where you left off" spellcheck="false"></textarea>
+          <p id="notesSaved" class="hint" role="status"></p>
+        </div>
+      </section>
+    </div>
+    <div id="empty" class="empty" hidden>
+      <p>Your library is empty.</p>
+      <button id="emptyAdd" class="primary">Add your first game</button>
+      <button id="emptyScan">Find installed games</button>
+    </div>
+  </main>
+
+  <dialog id="addDialog">
+    <form id="addForm" method="dialog">
+      <h2>Add a game</h2>
+      <label>Game file
+        <div class="row">
+          <input id="pathInput" type="text" readonly placeholder="Choose the game's executable">
+          <button type="button" id="browseBtn">Browse</button>
+        </div>
+      </label>
+      <label>Name
+        <input id="nameInput" type="text" placeholder="Game name" required>
+      </label>
+      <div class="actions">
+        <button type="button" id="cancelBtn">Cancel</button>
+        <button type="submit" class="primary" id="saveBtn">Add to library</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="scanDialog">
+    <h2>Find games</h2>
+    <p class="hint">Look for games that are already installed and add them in one go.</p>
+
+    <div class="sources" role="group" aria-label="Where to look">
+      <label class="check"><input type="checkbox" id="srcSteam" checked> Steam</label>
+      <label class="check" data-winonly><input type="checkbox" id="srcEpic" checked> Epic Games</label>
+      <label class="check" data-winonly><input type="checkbox" id="srcGog" checked> GOG</label>
+    </div>
+
+    <h3 class="section-title">Other folders</h3>
+    <p class="hint">Pick a folder that holds your games, like D:\Games. Each folder inside it is treated as one game.</p>
+    <ul id="scanFolders" class="folder-list"></ul>
+    <button type="button" id="addFolderBtn">Add folder</button>
+
+    <div class="scan-run">
+      <button type="button" id="scanRun" class="primary">Scan</button>
+      <span id="scanStatus" class="hint" role="status"></span>
+    </div>
+
+    <label id="selectAllRow" class="check" hidden><input type="checkbox" id="selectAll" checked> Select all</label>
+    <ul id="scanResults" class="scan-results"></ul>
+
+    <div class="actions">
+      <button type="button" id="scanClose">Close</button>
+      <button type="button" id="scanAdd" class="primary" disabled>Add selected</button>
+    </div>
+  </dialog>
+
+  <dialog id="settingsDialog">
+    <h2>Settings</h2>
+    <p class="hint">The overlay shows over your game while it is running. It works in windowed and borderless mode.</p>
+    <label>Overlay hotkey
+      <button type="button" id="hotkeyBtn" class="hotkey-btn"></button>
+    </label>
+    <p id="hotkeyMsg" class="hint" role="status"></p>
+    <h3 class="section-title">Appearance</h3>
+    <p class="hint">A palette is two colors, or three if you add a separate color for panels.</p>
+    <div id="presets" class="presets" role="group" aria-label="Color palettes"></div>
+
+    <h3 class="section-title">Colors</h3>
+    <div class="color-row">
+      <label for="colBg">Background</label>
+      <input type="color" id="colBg">
+    </div>
+    <div class="color-row">
+      <label for="colAccent">Accent</label>
+      <input type="color" id="colAccent">
+    </div>
+    <div class="color-row">
+      <label for="usePanel">Use a separate panel color</label>
+      <input type="checkbox" id="usePanel">
+      <input type="color" id="colPanel" aria-label="Panel color">
+    </div>
+    <p id="themeWarn" class="hint" role="status"></p>
+
+    <h3 class="section-title">Corners</h3>
+    <div id="corners" class="segmented" role="group" aria-label="Corner style">
+      <button type="button" data-corners="rounded">Rounded</button>
+      <button type="button" data-corners="subtle">Subtle</button>
+      <button type="button" data-corners="blocky">Blocky</button>
+    </div>
+
+    <div class="actions">
+      <button type="button" id="themeReset">Reset appearance</button>
+      <button type="button" id="settingsClose" class="primary">Done</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script src="theme-core.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

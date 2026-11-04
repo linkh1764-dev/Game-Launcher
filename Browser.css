@@ -1,0 +1,25 @@
+:root {
+  --bg: #161b2e; --surface: #20274a; --surface-hi: #2a3260; --text: #f2f4fa; --muted: #a3abcb;
+  --accent: #6c8cff; --r-sm: 8px; --r-pill: 15px;
+}
+html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; }
+body { font-family: "Segoe UI", "Inter", system-ui, "Ubuntu", sans-serif; color: var(--text); }
+.bar {
+  height: 44px; box-sizing: border-box; display: flex; align-items: center; gap: 6px;
+  padding: 0 8px; background: var(--surface); -webkit-app-region: drag;
+}
+button, input { -webkit-app-region: no-drag; }
+button {
+  width: 32px; height: 30px; flex: none; border: 0; border-radius: var(--r-sm);
+  background: transparent; color: var(--text); font-size: 16px; cursor: pointer;
+}
+button:hover:not(:disabled) { background: var(--surface-hi); }
+button:disabled { opacity: 0.35; cursor: default; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+input {
+  flex: 1; min-width: 0; height: 30px; box-sizing: border-box; padding: 0 14px;
+  border: 1px solid transparent; border-radius: var(--r-pill); background: var(--bg);
+  color: var(--text); font: inherit; font-size: 13px; outline: none;
+}
+input:focus { border-color: var(--accent); }
+.grip { width: 16px; flex: none; text-align: center; color: var(--muted); letter-spacing: -2px; cursor: move; }
